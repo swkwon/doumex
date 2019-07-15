@@ -8,7 +8,7 @@ func TestSlack_Send(t *testing.T) {
 	s := Slack{
 		WebHookURL: "https://hooks.slack.com/services/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",
 		Data: &SlackPayload{
-			Text: "hello world",
+			Text: "This is test code for slack.",
 		},
 	}
 

@@ -17,6 +17,7 @@ func TestTelegram_Send(t *testing.T) {
 		WebHookURL: os.Getenv("TG_TEST_URL"),
 		Data: &TelegramPayload{
 			ChatID: "TG_CHAT_ID",
+			Text: "This is test code for telegram.",
 		},
 	}
 
