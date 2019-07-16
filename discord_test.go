@@ -1,10 +1,17 @@
 package doumex
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestDiscord_Send(t *testing.T) {
+	url := os.Getenv("DISCORD_TEST_URL")
+	if url == "" {
+		return
+	}
 	d := &Discord{
-		WebHookURL: "https://discordapp.com/api/webhooks/598757949166452746/IjEBrzTau0up4Ao97eZ_ueQg2Mho31JbXthe9r2r7Dc0JCtmOTj1DPVEDDvcfMY_ybV0",
+		WebHookURL: url,
 		Data: &DiscordPayload{
 			Content: "This is test code for discord.",
 		},
