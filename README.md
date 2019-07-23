@@ -47,7 +47,7 @@ zulip := &doumex.Zulip{
     WebHookURL: {WEBHOOK_URL},
     Bot:        {BOT_NAME},
     APIKey:     {BOT_API_KEY},
-    Data: &ZulipData{
+    Data: &ZulipPayload{
         Type:    {stream | private},
         To:      {STREAM_NAME},
         Subject: {TOPIC_NAME},

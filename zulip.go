@@ -5,7 +5,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-type ZulipData struct {
+type ZulipPayload struct {
 	Type    string `json:"type"`
 	To      string `json:"to"`
 	Subject string `json:"subject,omitempty"`
@@ -13,10 +13,10 @@ type ZulipData struct {
 }
 
 type Zulip struct {
-	WebHookURL string     `json:"url"`
-	Data       *ZulipData `json:"payload"`
-	Bot        string     `json:"bot"`
-	APIKey     string     `json:"apikey"`
+	WebHookURL string        `json:"url"`
+	Data       *ZulipPayload `json:"payload"`
+	Bot        string        `json:"bot"`
+	APIKey     string        `json:"apikey"`
 }
 
 func (z *Zulip) makeContent() string {
