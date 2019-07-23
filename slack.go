@@ -62,7 +62,7 @@ type Slack struct {
 func (s *Slack) Send() []error {
 	jsonData, err := json.Marshal(s.Data)
 	if err != nil {
-		return nil
+		return []error{err}
 	}
 	request := gorequest.New()
 	resp, _, errs := request.Post(s.WebHookURL).Send(string(jsonData)).End()

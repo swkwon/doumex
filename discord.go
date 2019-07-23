@@ -54,7 +54,7 @@ type Discord struct {
 func (d *Discord) Send() []error {
 	jsonData, err := json.Marshal(d.Data)
 	if err != nil {
-		return nil
+		return []error{err}
 	}
 	request := gorequest.New()
 	resp, _, errs := request.Post(d.WebHookURL).Send(string(jsonData)).End()

@@ -19,7 +19,7 @@ type Telegram struct {
 func (t *Telegram) Send() []error {
 	jsonData, err := json.Marshal(t.Data)
 	if err != nil {
-		return nil
+		return []error{err}
 	}
 	request := gorequest.New()
 	resp, _, errs := request.Post(t.WebHookURL).Send(string(jsonData)).End()

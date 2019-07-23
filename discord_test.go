@@ -1,8 +1,8 @@
 package doumex
 
 import (
-	"os"
-	"testing"
+"os"
+"testing"
 )
 
 func TestDiscord_Send(t *testing.T) {
