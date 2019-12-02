@@ -1,4 +1,4 @@
-module doumex
+module github.com/swkwon/doumex
 
 go 1.12
 
