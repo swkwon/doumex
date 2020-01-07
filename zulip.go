@@ -2,6 +2,7 @@ package doumex
 
 import (
 	"fmt"
+
 	"github.com/parnurzeal/gorequest"
 )
 
@@ -26,7 +27,7 @@ func (z *Zulip) makeContent() string {
 func (z *Zulip) Send() []error {
 	request := gorequest.New()
 	request.SetBasicAuth(z.Bot, z.APIKey)
-	request.Header["Content-Type"] = "application/x-www-form-urlencoded"
+	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	content := z.makeContent()
 	resp, _, errs := request.Post(z.WebHookURL).Send(content).End()
 	if errs != nil {
