@@ -1,4 +1,4 @@
-package doumex
+package webhook
 
 import (
 	"os"
@@ -10,16 +10,14 @@ func TestSlack_Send(t *testing.T) {
 	if url == "" {
 		return
 	}
-	s := Slack{
+	s := &Slack{
 		WebHookURL: url,
 		Data: &SlackPayload{
 			Text: "This is test code for slack.",
 		},
 	}
 
-	if e := s.Send(); e != nil {
-		for _, v := range e {
-			t.Error(v)
-		}
+	if e := Send(s); e != nil {
+		t.Error(e)
 	}
 }

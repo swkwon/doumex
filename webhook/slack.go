@@ -1,10 +1,4 @@
-package doumex
-
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/parnurzeal/gorequest"
-)
+package webhook
 
 type SlackField struct {
 	Title string `json:"title"`
@@ -59,18 +53,10 @@ type Slack struct {
 	Data       *SlackPayload `json:"payload"`
 }
 
-func (s *Slack) Send() []error {
-	jsonData, err := json.Marshal(s.Data)
-	if err != nil {
-		return []error{err}
-	}
-	request := gorequest.New()
-	resp, _, errs := request.Post(s.WebHookURL).Send(string(jsonData)).End()
-	if errs != nil {
-		return errs
-	}
-	if resp.StatusCode >= 400 {
-		return []error{fmt.Errorf("error sending msg. status: %v", resp.StatusCode)}
-	}
-	return nil
+func (s *Slack) GetData() interface{} {
+	return s.Data
+}
+
+func (s *Slack) GetURL() string {
+	return s.WebHookURL
 }

@@ -1,4 +1,4 @@
-package doumex
+package webhook
 
 import (
 	"os"
@@ -21,9 +21,7 @@ func TestTelegram_Send(t *testing.T) {
 		},
 	}
 
-	if e := tg.Send(); e != nil {
-		for _, v := range e {
-			t.Error(v)
-		}
+	if e := Send(tg); e != nil {
+		t.Error(e)
 	}
 }

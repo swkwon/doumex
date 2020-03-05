@@ -1,9 +1,10 @@
-package doumex
+package webhook
 
 import (
+	"bytes"
+	"errors"
 	"fmt"
-
-	"github.com/parnurzeal/gorequest"
+	"net/http"
 )
 
 type ZulipPayload struct {
@@ -24,18 +25,21 @@ func (z *Zulip) makeContent() string {
 	return fmt.Sprintf(`type=%s&to=%s&subject=%s&content=%s`, z.Data.Type, z.Data.To, z.Data.Subject, z.Data.Content)
 }
 
-func (z *Zulip) Send() []error {
-	request := gorequest.New()
-	request.SetBasicAuth(z.Bot, z.APIKey)
-	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	content := z.makeContent()
-	resp, _, errs := request.Post(z.WebHookURL).Send(content).End()
-	if errs != nil {
-		return errs
+func (z *Zulip) Send() error {
+	req, e := http.NewRequest("POST", z.WebHookURL, bytes.NewBuffer([]byte(z.makeContent())))
+	if e != nil {
+		return e
 	}
-
-	if resp.StatusCode >= 400 {
-		return []error{fmt.Errorf("error sending msg. status: %v", resp.StatusCode)}
+	req.SetBasicAuth(z.Bot, z.APIKey)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	c := &http.Client{}
+	res, err := c.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if res.StatusCode >= 400 {
+		return errors.New(res.Status)
 	}
 	return nil
 }

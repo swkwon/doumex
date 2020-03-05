@@ -1,8 +1,8 @@
-package doumex
+package webhook
 
 import (
-"os"
-"testing"
+	"os"
+	"testing"
 )
 
 func TestDiscord_Send(t *testing.T) {
@@ -16,9 +16,7 @@ func TestDiscord_Send(t *testing.T) {
 			Content: "This is test code for discord.",
 		},
 	}
-	if e := d.Send(); e != nil {
-		for _, v := range e {
-			t.Error(v)
-		}
+	if e := Send(d); e != nil {
+		t.Error(e)
 	}
 }

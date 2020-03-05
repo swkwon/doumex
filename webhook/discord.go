@@ -1,10 +1,4 @@
-package doumex
-
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/parnurzeal/gorequest"
-)
+package webhook
 
 type Author struct {
 	Name    string `json:"name"`
@@ -51,18 +45,10 @@ type Discord struct {
 	Data       *DiscordPayload `json:"payload"`
 }
 
-func (d *Discord) Send() []error {
-	jsonData, err := json.Marshal(d.Data)
-	if err != nil {
-		return []error{err}
-	}
-	request := gorequest.New()
-	resp, _, errs := request.Post(d.WebHookURL).Send(string(jsonData)).End()
-	if errs != nil {
-		return errs
-	}
-	if resp.StatusCode >= 400 {
-		return []error{fmt.Errorf("error sending msg. status: %v", resp.StatusCode)}
-	}
-	return nil
+func (d *Discord) GetData() interface{} {
+	return d.Data
+}
+
+func (d *Discord) GetURL() string {
+	return d.WebHookURL
 }
